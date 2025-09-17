@@ -103,13 +103,15 @@ export class OpenAIService {
    * Builds the prompt for the OpenAI API
    */
   private buildPrompt(storeName: string): string {
-    return `Provide 3 normal-length sentences about "${storeName}" to build shopper credibility. Focus on factors that will help shoppers understand the context of their purchase, such as:
+    return `Provide a few SHORT, CONCISE sentences about "${storeName}" to build shopper credibility. Focus on factors that will help shoppers understand the context of their purchase, such as:
 - How long they've been in business and their scale (number of stores, countries)
 - What they sell
 - Size of customer base, market position, or loyal fan base
 - Major achievements, awards, or industry leadership
 - What they're famous for or their biggest strengths
 - Other helpful information (satisfaction ratings, return policies, guarantees)
+
+IMPORTANT: Keep each sentence SHORT and CONCISE. Aim for 15-20 words per sentence maximum.
 
 If uncertain about the store, ONLY return: "0"`;
   }
@@ -118,7 +120,7 @@ If uncertain about the store, ONLY return: "0"`;
    * Gets the system prompt for the AI
    */
   private getSystemPrompt(): string {
-    return 'You are an ecommerce expert (DTC, retail, etc.). Never use "I" in responses. Write casually and simply, like you are helping a friend. Never mention non-ecommerce business divisions or factors. Be factual and provide current, accurate information about stores.';
+    return 'You are an ecommerce expert (DTC, retail, etc.). Never use "I" in responses. Write SHORT, CONCISE sentences. Be casual and simple, like helping a friend. Never mention non-ecommerce business divisions or factors. Be factual with current, accurate information.';
   }
 
 }
