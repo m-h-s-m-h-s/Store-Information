@@ -82,7 +82,7 @@ export class OpenAIService {
 - Size of customer base, market position, or loyal fan base
 - Major achievements, awards, or industry leadership
 - What they're famous for or their biggest strengths
-- Trust indicators (satisfaction ratings, return policies, guarantees)
+- Other helpful information (satisfaction ratings, return policies, guarantees)
 
 If uncertain about the store, state: "We're uncertain about information for this store" and briefly explain why.`;
   }
