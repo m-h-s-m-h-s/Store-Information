@@ -32,39 +32,58 @@ export class OpenAIService {
 
       const prompt = this.buildPrompt(request.storeName);
       
-      // Use responses API with web search
-      logger.debug('Using responses API with web search');
+      // First try normal chat completions
+      logger.debug('Trying chat completions first');
+      const completion = await this.client.chat.completions.create({
+        model: this.model,
+        messages: [
+          {
+            role: 'system',
+            content: this.getSystemPrompt(),
+          },
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+      });
       
-      let response: string;
-      try {
-        const responseData = await (this.client as any).responses.create({
-          model: 'gpt-5', // Use gpt-5 for responses API
-          tools: [
-            { type: "web_search" },
-          ],
-          input: `${this.getSystemPrompt()}\n\n${prompt}`,
-        });
+      let response = completion.choices[0]?.message?.content || '';
+      const trimmedInitialResponse = response.trim();
+      
+      // If chat completions returns "0" (uncertain), try web search
+      if (trimmedInitialResponse === '0' || trimmedInitialResponse.length === 0) {
+        logger.info('Store not found in database, searching the web...');
+        logger.debug('Chat completions returned no result, trying web search');
         
-        // Extract the output text from the response
-        response = responseData.output_text || '';
-        logger.debug('Web search completed successfully');
-      } catch (error) {
-        // Fallback if responses API fails
-        logger.debug('Responses API failed, falling back to chat completions');
-        const completion = await this.client.chat.completions.create({
-          model: this.model,
-          messages: [
-            {
-              role: 'system',
-              content: this.getSystemPrompt(),
-            },
-            {
-              role: 'user',
-              content: prompt,
-            },
-          ],
-        });
-        response = completion.choices[0]?.message?.content || '';
+        try {
+          const responseData = await (this.client as any).responses.create({
+            model: 'gpt-5', // Use gpt-5 for responses API
+            tools: [
+              { type: "web_search" },
+            ],
+            input: `${this.getSystemPrompt()}\n\n${prompt}`,
+          });
+          
+          // Extract the output text from the response
+          const webSearchResponse = responseData.output_text || '';
+          const trimmedWebResponse = webSearchResponse.trim();
+          
+          // If web search also returns nothing or "0", keep it as "0"
+          if (trimmedWebResponse === '0' || trimmedWebResponse.length === 0) {
+            response = '0';
+            logger.warning('Web search found no information about this store');
+            logger.debug('Web search also returned no result');
+          } else {
+            response = webSearchResponse;
+            logger.success('Found information via web search!');
+            logger.debug('Web search found information');
+          }
+        } catch (error) {
+          logger.warning('Web search unavailable, using limited information');
+          logger.debug('Web search failed, keeping original response');
+          // Keep the original "0" response
+        }
       }
       
       const trimmedResponse = response.trim();
@@ -103,7 +122,7 @@ export class OpenAIService {
    * Builds the prompt for the OpenAI API
    */
   private buildPrompt(storeName: string): string {
-    return `Provide a few SHORT, CONCISE sentences about "${storeName}" to build shopper credibility. Focus on factors that will help shoppers understand the context of their purchase, such as:
+    return `Provide a small paragraph about "${storeName}" to build shopper credibility. Focus on factors that will help shoppers understand the context of their purchase, such as:
 - How long they've been in business and their scale (number of stores, countries)
 - What they sell
 - Size of customer base, market position, or loyal fan base
