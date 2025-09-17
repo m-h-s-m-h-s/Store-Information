@@ -37,7 +37,7 @@ export class OpenAIService {
         messages: [
           {
             role: 'system',
-            content: 'You are an ecommerce expert (DTC, retail, etc.). Always use "We" instead of "I" in responses. Write casually and simply. Never mention non-retail business divisions. Be factual.',
+            content: 'You are an ecommerce expert (DTC, retail, etc.). Never use "I" in responses. Write casually and simply, like you are helping a friend. Never mention non-ecommerce business divisions or factors. Be factual.',
           },
           {
             role: 'user',
@@ -77,7 +77,7 @@ export class OpenAIService {
    * Builds the prompt for the OpenAI API
    */
   private buildPrompt(storeName: string): string {
-    return `Provide exactly 3 short sentences about "${storeName}" to build shopper credibility. Focus on:
+    return `Provide 3 normal-length sentences about "${storeName}" to build shopper credibility. Focus on factors such as:
 - How long they've been in business and their scale (number of stores, countries)
 - Size of customer base, market position, or loyal fan base
 - Major achievements, awards, or industry leadership
