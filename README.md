@@ -4,7 +4,7 @@ A modern TypeScript application that provides credible store information using O
 
 ## Features
 
-- 🤖 **AI-Powered**: Uses OpenAI's GPT-5-nano model to generate store information
+- 🤖 **AI-Powered**: Uses OpenAI's GPT-5 model with web search to generate real-time store information
 - 📊 **Factual Focus**: Provides only verifiable, factual data about stores
 - 🎯 **Credibility Building**: Generates 3 concise sentences designed to build customer trust
 - ⚡ **Modern Stack**: Built with TypeScript, ES modules, and modern tooling
@@ -34,7 +34,7 @@ npm install
 3. Create a `.env` file in the root directory with your OpenAI API key:
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-5-nano
+OPENAI_MODEL=gpt-5-mini
 API_TIMEOUT=30000
 ```
 
@@ -120,7 +120,7 @@ The application can be configured using environment variables:
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `OPENAI_API_KEY` | Your OpenAI API key (required) | - |
-| `OPENAI_MODEL` | The GPT model to use | `gpt-5-nano` |
+| `OPENAI_MODEL` | The GPT model to use | `gpt-5-mini` |
 | `API_TIMEOUT` | API request timeout in milliseconds | `30000` |
 
 ## Error Handling

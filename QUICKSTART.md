@@ -14,7 +14,7 @@ Create a `.env` file in the root directory:
 
 ```bash
 echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
-echo "OPENAI_MODEL=gpt-5-nano" >> .env
+echo "OPENAI_MODEL=gpt-5-mini" >> .env
 ```
 
 ## 3. Build and Run

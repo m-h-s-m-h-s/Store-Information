@@ -55,7 +55,7 @@ import { OpenAIService } from './services/openai.service';
 
 const service = new OpenAIService({
   apiKey: 'your-api-key',
-  model: 'gpt-5-nano',
+  model: 'gpt-5-mini',
   timeout: 30000
 });
 ```
@@ -308,6 +308,6 @@ const mockResponse: StoreInfoResponse = {
 | Variable | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `OPENAI_API_KEY` | string | Yes | - | Your OpenAI API key |
-| `OPENAI_MODEL` | string | No | `gpt-5-nano` | The GPT model to use |
+| `OPENAI_MODEL` | string | No | `gpt-5-mini` | The GPT model to use |
 | `API_TIMEOUT` | number | No | `30000` | API timeout in milliseconds |
 | `NODE_ENV` | string | No | `production` | Environment (affects debug logging) |

@@ -19,7 +19,7 @@ export function getOpenAIConfig(): OpenAIConfig {
 
   return {
     apiKey,
-    model: process.env.OPENAI_MODEL || 'gpt-5-nano',
+    model: process.env.OPENAI_MODEL || 'gpt-5-mini',
     timeout: process.env.API_TIMEOUT ? parseInt(process.env.API_TIMEOUT, 10) : 30000,
   };
 }

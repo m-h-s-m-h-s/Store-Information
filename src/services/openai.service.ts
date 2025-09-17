@@ -32,25 +32,51 @@ export class OpenAIService {
 
       const prompt = this.buildPrompt(request.storeName);
       
-      const completion = await this.client.chat.completions.create({
-        model: this.model,
-        messages: [
-          {
-            role: 'system',
-            content: 'You are an ecommerce expert (DTC, retail, etc.). Never use "I" in responses. Write casually and simply, like you are helping a friend. Never mention non-ecommerce business divisions or factors. Be factual.',
-          },
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-      });
-
-      const response = completion.choices[0]?.message?.content || '';
+      // Use responses API with web search
+      logger.debug('Using responses API with web search');
+      
+      let response: string;
+      try {
+        const responseData = await (this.client as any).responses.create({
+          model: 'gpt-5', // Use gpt-5 for responses API
+          tools: [
+            { type: "web_search" },
+          ],
+          input: `${this.getSystemPrompt()}\n\n${prompt}`,
+        });
+        
+        // Extract the output text from the response
+        response = responseData.output_text || '';
+        logger.debug('Web search completed successfully');
+      } catch (error) {
+        // Fallback if responses API fails
+        logger.debug('Responses API failed, falling back to chat completions');
+        const completion = await this.client.chat.completions.create({
+          model: this.model,
+          messages: [
+            {
+              role: 'system',
+              content: this.getSystemPrompt(),
+            },
+            {
+              role: 'user',
+              content: prompt,
+            },
+          ],
+        });
+        response = completion.choices[0]?.message?.content || '';
+      }
+      
+      const trimmedResponse = response.trim();
+      
+      // If the response is empty or zero, use default message
+      const finalResponse = trimmedResponse.length === 0 || trimmedResponse === '0' 
+        ? "We're unable to single-out detailed context about this store."
+        : trimmedResponse;
 
       return {
         storeName: request.storeName,
-        information: response.trim(),
+        information: finalResponse,
         isUncertain: false,
         timestamp: new Date(),
       };
@@ -85,7 +111,14 @@ export class OpenAIService {
 - What they're famous for or their biggest strengths
 - Other helpful information (satisfaction ratings, return policies, guarantees)
 
-If uncertain about the store, state: "We're uncertain about detailed context for this store."`;
+If uncertain about the store, ONLY return: "0"`;
+  }
+
+  /**
+   * Gets the system prompt for the AI
+   */
+  private getSystemPrompt(): string {
+    return 'You are an ecommerce expert (DTC, retail, etc.). Never use "I" in responses. Write casually and simply, like you are helping a friend. Never mention non-ecommerce business divisions or factors. Be factual and provide current, accurate information about stores.';
   }
 
 }
