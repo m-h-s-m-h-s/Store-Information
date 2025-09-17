@@ -13,7 +13,7 @@ npm install
 Create a `.env` file in the root directory:
 
 ```bash
-echo "OPENAI_API_KEY=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" > .env
+echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
 echo "OPENAI_MODEL=gpt-5-nano" >> .env
 ```
 

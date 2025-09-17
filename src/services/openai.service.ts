@@ -37,7 +37,7 @@ export class OpenAIService {
         messages: [
           {
             role: 'system',
-            content: 'You are a retail credibility expert. Always use "We" instead of "I" in responses. Never mention non-retail business divisions. Be concise and factual.',
+            content: 'You are an ecommerce expert (DTC, retail, etc.). Always use "We" instead of "I" in responses. Write casually and simply. Never mention non-retail business divisions. Be factual.',
           },
           {
             role: 'user',

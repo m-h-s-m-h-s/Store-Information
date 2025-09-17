@@ -33,7 +33,7 @@ npm install
 
 3. Create a `.env` file in the root directory with your OpenAI API key:
 ```env
-OPENAI_API_KEY=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
+OPENAI_API_KEY=your_openai_api_key_here
 OPENAI_MODEL=gpt-5-nano
 API_TIMEOUT=30000
 ```
