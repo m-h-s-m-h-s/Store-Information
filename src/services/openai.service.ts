@@ -77,14 +77,15 @@ export class OpenAIService {
    * Builds the prompt for the OpenAI API
    */
   private buildPrompt(storeName: string): string {
-    return `Provide 3 normal-length sentences about "${storeName}" to build shopper credibility. Focus on factors such as:
+    return `Provide 3 normal-length sentences about "${storeName}" to build shopper credibility. Focus on factors that will help shoppers understand the context of their purchase, such as:
 - How long they've been in business and their scale (number of stores, countries)
+- What they sell
 - Size of customer base, market position, or loyal fan base
 - Major achievements, awards, or industry leadership
 - What they're famous for or their biggest strengths
 - Other helpful information (satisfaction ratings, return policies, guarantees)
 
-If uncertain about the store, state: "We're uncertain about information for this store" and briefly explain why.`;
+If uncertain about the store, state: "We're uncertain about detailed context for this store."`;
   }
 
 }
