@@ -24,8 +24,6 @@ export interface StoreInfoRequest {
 export interface StoreInfoResponse {
   storeName: string;
   information: string;
-  isUncertain: boolean;
-  timestamp: Date;
 }
 
 /**

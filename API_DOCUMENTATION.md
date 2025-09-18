@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Store Information Finder application provides a programmatic interface for retrieving credible store information using OpenAI's GPT API. This document covers the core APIs and services available for developers.
+The Store Information Finder application provides a programmatic interface for retrieving credible store information using OpenAI's GPT API with automatic web search fallback. This document covers the core APIs and services available for developers.
 
 ## Core Services
 
@@ -44,7 +44,7 @@ Formats the store information response for display.
 - `response` (StoreInfoResponse): The response object to format
 
 **Returns:**
-- `string`: Formatted response string with headers and timestamp
+- `string`: Formatted response string with headers
 
 ### OpenAIService
 
@@ -88,8 +88,6 @@ interface StoreInfoRequest {
 interface StoreInfoResponse {
   storeName: string;
   information: string;
-  isUncertain: boolean;
-  timestamp: Date;
 }
 ```
 
@@ -225,11 +223,6 @@ async function customStoreQuery() {
   };
   
   const response = await service.getStoreInformation(request);
-  
-  if (response.isUncertain) {
-    console.log('Note: Limited information available');
-  }
-  
   console.log(response.information);
 }
 ```
@@ -283,7 +276,7 @@ Thrown when required configuration is missing or invalid.
 
 1. **Always handle errors**: Use try-catch blocks and check for `StoreInfoError` type
 2. **Validate input**: Use `validateStoreName` before making API calls
-3. **Check uncertainty**: Always check the `isUncertain` flag in responses
+3. **Monitor web search**: Be aware that the API will automatically search the web if initial results are limited
 4. **Rate limiting**: Implement appropriate delays between requests to avoid rate limits
 5. **Caching**: Consider caching responses for frequently queried stores
 6. **Logging**: Use the provided logger for consistent output
@@ -298,8 +291,6 @@ jest.mock('./services/openai.service');
 const mockResponse: StoreInfoResponse = {
   storeName: 'Test Store',
   information: 'Test information about the store.',
-  isUncertain: false,
-  timestamp: new Date()
 };
 ```
 

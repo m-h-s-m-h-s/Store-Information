@@ -4,12 +4,13 @@ A modern TypeScript application that provides credible store information using O
 
 ## Features
 
-- 🤖 **AI-Powered**: Uses OpenAI's GPT-5 model with web search to generate real-time store information
+- 🤖 **AI-Powered**: Uses OpenAI's GPT-5-mini model with automatic web search fallback for real-time information
+- 🌐 **Web Search**: Automatically searches the web when store information isn't available in the model
 - 📊 **Factual Focus**: Provides only verifiable, factual data about stores
-- 🎯 **Credibility Building**: Generates 3 concise sentences designed to build customer trust
+- 🎯 **Credibility Building**: Generates concise paragraphs designed to build customer trust
 - ⚡ **Modern Stack**: Built with TypeScript, ES modules, and modern tooling
 - 🛡️ **Error Handling**: Comprehensive error handling with clear user feedback
-- 🎨 **Beautiful CLI**: Interactive command-line interface with colored output
+- 🎨 **Beautiful CLI**: Interactive command-line interface with colored output and status updates
 - 📝 **Type Safety**: Full TypeScript support with strict type checking
 
 ## Prerequisites
@@ -60,8 +61,8 @@ npm run dev
 ### Using the CLI
 
 1. When prompted, enter the name of a store
-2. The app will query the OpenAI API and return 3 factual sentences about the store
-3. If the AI is uncertain about the store, it will clearly indicate this
+2. The app will query the OpenAI API and return a concise paragraph about the store
+3. If information isn't available, it automatically searches the web
 4. You can search for multiple stores in one session
 
 ### Example Output
@@ -69,20 +70,28 @@ npm run dev
 ```
 🏪 Store Information Finder
 
-Enter store name: Apple Store
+Enter store name: Amazon
 
 ✓ Information retrieved successfully!
 
-📍 Store Information: Apple Store
+📍 Store Information: Amazon
 ==================================================
-Apple Inc. was founded in 1976 and operates over 500 retail stores 
-across 25 countries worldwide. The company has been recognized as the 
-world's most valuable brand multiple times and serves millions of 
-customers annually. Apple Stores have won numerous awards for retail 
-design and customer service excellence, maintaining one of the highest 
-sales-per-square-foot metrics in retail.
+Founded in 1994, Amazon is one of the world's largest online retailers. Operates e-commerce marketplaces in more than 20 countries and ships to millions worldwide. Sells millions of products across categories like electronics, home, clothing, groceries, and essentials. Serves hundreds of millions of active customers, supported by a vast third-party seller network. Known for fast shipping, vast selection, competitive pricing, and reliable customer support. Offers easy returns for most items and an A-to-z Guarantee for marketplace purchases.
 ==================================================
-🕐 Generated: 9/17/2025, 2:30:45 PM
+```
+
+If a store is not found in the model's knowledge, it automatically searches the web:
+
+```
+Enter store name: Small Local Store
+
+ℹ Store not found in database, searching the web...
+✓ Found information via web search!
+
+📍 Store Information: Small Local Store
+==================================================
+[Web search results about the store will appear here]
+==================================================
 ```
 
 ## Project Structure

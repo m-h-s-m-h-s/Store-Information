@@ -13,14 +13,12 @@ import { logger } from '../utils/logger.js';
  */
 export class OpenAIService {
   private client: OpenAI;
-  private model: string;
 
   constructor(config: OpenAIConfig) {
     this.client = new OpenAI({
       apiKey: config.apiKey,
       timeout: config.timeout,
     });
-    this.model = config.model || 'gpt-5-nano';
   }
 
   /**
@@ -35,7 +33,7 @@ export class OpenAIService {
       // First try normal chat completions
       logger.debug('Trying chat completions first');
       const completion = await this.client.chat.completions.create({
-        model: this.model,
+        model: 'gpt-5-nano', // Always use nano for chat completions
         messages: [
           {
             role: 'system',
@@ -58,7 +56,7 @@ export class OpenAIService {
         
         try {
           const responseData = await (this.client as any).responses.create({
-            model: 'gpt-5', // Use gpt-5 for responses API
+            model: 'gpt-5-mini', // Use gpt-5-mini for responses API with web search
             tools: [
               { type: "web_search" },
             ],
@@ -96,8 +94,6 @@ export class OpenAIService {
       return {
         storeName: request.storeName,
         information: finalResponse,
-        isUncertain: false,
-        timestamp: new Date(),
       };
     } catch (error) {
       logger.error('Error calling OpenAI API', error as Error);

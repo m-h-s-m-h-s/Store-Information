@@ -47,7 +47,7 @@ export class StoreInfoService {
   formatResponse(response: StoreInfoResponse): string {
     const header = `\n📍 Store Information: ${response.storeName}\n${'='.repeat(50)}\n`;
     const body = response.information;
-    const footer = `\n${'='.repeat(50)}\n🕐 Generated: ${response.timestamp.toLocaleString()}\n`;
+    const footer = `\n${'='.repeat(50)}\n`;
 
     return header + body + footer;
   }

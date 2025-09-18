@@ -265,9 +265,13 @@ Consider implementing caching for frequently requested stores:
 const cache = new Map<string, StoreInfoResponse>();
 const CACHE_TTL = 3600000; // 1 hour
 
+interface CachedResponse extends StoreInfoResponse {
+  cachedAt: Date;
+}
+
 if (cache.has(storeName)) {
   const cached = cache.get(storeName)!;
-  if (Date.now() - cached.timestamp.getTime() < CACHE_TTL) {
+  if (Date.now() - cached.cachedAt.getTime() < CACHE_TTL) {
     return cached;
   }
 }
