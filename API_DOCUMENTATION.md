@@ -32,7 +32,7 @@ Retrieves information about a store.
 
 **Example:**
 ```typescript
-const response = await service.getStoreInfo('Apple Store');
+const response = await service.getStoreInfo('apple.com');
 console.log(response.information);
 ```
 
@@ -275,10 +275,15 @@ Thrown when required configuration is missing or invalid.
 ## Best Practices
 
 1. **Always handle errors**: Use try-catch blocks and check for `StoreInfoError` type
-2. **Validate input**: Use `validateStoreName` before making API calls
+2. **Validate input**: Use `validateStoreName` before making API calls (expects store URL)
 3. **Monitor web search**: Be aware that the API will automatically search the web if initial results are limited
 4. **Rate limiting**: Implement appropriate delays between requests to avoid rate limits
-5. **Caching**: Consider caching responses for frequently queried stores
+5. **Production Caching Strategy** (CRITICAL):
+   - Store generated descriptions in a database
+   - Serve cached descriptions instead of calling API each time
+   - Implement refresh logic (e.g., after 30+ days or based on staleness)
+   - Consider view-based refresh triggers
+   - This reduces API costs significantly and improves response times
 6. **Logging**: Use the provided logger for consistent output
 
 ## Testing

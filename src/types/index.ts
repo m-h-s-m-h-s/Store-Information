@@ -13,16 +13,17 @@ export interface OpenAIConfig {
 
 /**
  * Represents a request to get information about a store
+ * Note: storeName should be the store's URL
  */
 export interface StoreInfoRequest {
-  storeName: string;
+  storeName: string; // Store URL (e.g., "amazon.com")
 }
 
 /**
  * Represents the response from the store information service
  */
 export interface StoreInfoResponse {
-  storeName: string;
+  storeName: string; // Store URL
   information: string;
 }
 

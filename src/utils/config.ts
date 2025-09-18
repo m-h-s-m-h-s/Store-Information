@@ -25,20 +25,23 @@ export function getOpenAIConfig(): OpenAIConfig {
 }
 
 /**
- * Validates that a store name is provided and meets basic requirements
+ * Validates that a store URL is provided and meets basic requirements
  */
 export function validateStoreName(storeName: string): void {
   if (!storeName || storeName.trim().length === 0) {
     throw new StoreInfoError(
       ErrorType.INVALID_INPUT,
-      'Store name cannot be empty'
+      'Store URL cannot be empty'
     );
   }
 
   if (storeName.length > 200) {
     throw new StoreInfoError(
       ErrorType.INVALID_INPUT,
-      'Store name is too long (maximum 200 characters)'
+      'Store URL is too long (maximum 200 characters)'
     );
   }
+  
+  // Note: In production, you may want to add URL format validation
+  // For now, we accept any string as stores may have various URL formats
 }

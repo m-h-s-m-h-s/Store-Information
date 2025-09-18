@@ -44,13 +44,13 @@ export class CLI {
           {
             type: 'input',
             name: 'storeName',
-            message: 'Enter store name:',
+            message: 'Enter store URL:',
             validate: (input: string) => {
               if (!input.trim()) {
-                return 'Please enter a store name';
+                return 'Please enter a store URL';
               }
               if (input.length > 200) {
-                return 'Store name is too long (max 200 characters)';
+                return 'Store URL is too long (max 200 characters)';
               }
               return true;
             },

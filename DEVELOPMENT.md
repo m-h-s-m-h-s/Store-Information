@@ -260,19 +260,56 @@ logger.debug('API Request', { storeName, model });
 
 ### 1. Caching
 
-Consider implementing caching for frequently requested stores:
-```typescript
-const cache = new Map<string, StoreInfoResponse>();
-const CACHE_TTL = 3600000; // 1 hour
+**IMPORTANT FOR PRODUCTION**: Implement persistent caching, not just in-memory:
 
-interface CachedResponse extends StoreInfoResponse {
-  cachedAt: Date;
+```typescript
+// Example production caching strategy
+interface CachedStoreDescription {
+  url: string;
+  description: string;
+  generatedAt: Date;
+  lastViewedAt: Date;
+  viewCount: number;
 }
 
-if (cache.has(storeName)) {
-  const cached = cache.get(storeName)!;
-  if (Date.now() - cached.cachedAt.getTime() < CACHE_TTL) {
-    return cached;
+class StoreDescriptionCache {
+  private db: Database; // Your database connection
+  
+  async getDescription(url: string): Promise<string | null> {
+    const cached = await this.db.findOne({ url });
+    
+    if (!cached) return null;
+    
+    // Update view stats
+    await this.db.update(
+      { url },
+      { 
+        lastViewedAt: new Date(),
+        viewCount: cached.viewCount + 1
+      }
+    );
+    
+    // Check if refresh needed (30+ days old or high view count)
+    const ageInDays = (Date.now() - cached.generatedAt.getTime()) / (1000 * 60 * 60 * 24);
+    if (ageInDays > 30 || cached.viewCount % 100 === 0) {
+      // Queue for background refresh
+      this.queueRefresh(url);
+    }
+    
+    return cached.description;
+  }
+  
+  async saveDescription(url: string, description: string): Promise<void> {
+    await this.db.upsert(
+      { url },
+      {
+        url,
+        description,
+        generatedAt: new Date(),
+        lastViewedAt: new Date(),
+        viewCount: 1
+      }
+    );
   }
 }
 ```

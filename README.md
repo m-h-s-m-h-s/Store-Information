@@ -60,21 +60,31 @@ npm run dev
 
 ### Using the CLI
 
-1. When prompted, enter the name of a store
+1. When prompted, enter the store's URL
 2. The app will query the OpenAI API and return a concise paragraph about the store
 3. If information isn't available, it automatically searches the web
 4. You can search for multiple stores in one session
+
+### Production Considerations
+
+**Important**: In production environments:
+- Store descriptions should be **cached/stored in a database** rather than computed each time
+- Implement a caching strategy that:
+  - Serves cached descriptions for most requests
+  - Refreshes descriptions periodically (e.g., after 30+ days)
+  - Triggers refresh based on view frequency or staleness
+  - Reduces API costs and improves response times
 
 ### Example Output
 
 ```
 🏪 Store Information Finder
 
-Enter store name: Amazon
+Enter store URL: amazon.com
 
 ✓ Information retrieved successfully!
 
-📍 Store Information: Amazon
+📍 Store Information: amazon.com
 ==================================================
 Founded in 1994, Amazon is one of the world's largest online retailers. Operates e-commerce marketplaces in more than 20 countries and ships to millions worldwide. Sells millions of products across categories like electronics, home, clothing, groceries, and essentials. Serves hundreds of millions of active customers, supported by a vast third-party seller network. Known for fast shipping, vast selection, competitive pricing, and reliable customer support. Offers easy returns for most items and an A-to-z Guarantee for marketplace purchases.
 ==================================================
@@ -83,12 +93,12 @@ Founded in 1994, Amazon is one of the world's largest online retailers. Operates
 If a store is not found in the model's knowledge, it automatically searches the web:
 
 ```
-Enter store name: Small Local Store
+Enter store URL: smalllocalstore.com
 
 ℹ Store not found in database, searching the web...
 ✓ Found information via web search!
 
-📍 Store Information: Small Local Store
+📍 Store Information: smalllocalstore.com
 ==================================================
 [Web search results about the store will appear here]
 ==================================================

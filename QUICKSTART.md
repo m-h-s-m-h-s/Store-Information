@@ -26,10 +26,14 @@ npm start
 
 ## What to Expect
 
-1. You'll see a welcome message and prompt to enter a store name
-2. Type any store name (e.g., "Apple Store", "Amazon", "Target")
-3. The app will generate 3 factual sentences about the store
+1. You'll see a welcome message and prompt to enter a store URL
+2. Type any store URL (e.g., "apple.com", "amazon.com", "target.com")
+3. The app will generate 3-4 factual sentences about the store
 4. You can search for multiple stores in one session
+
+## Production Note
+
+⚠️ **Important**: In production, implement caching to store generated descriptions in a database rather than calling the API each time. See the full documentation for caching strategies.
 
 ## Example Session
 
