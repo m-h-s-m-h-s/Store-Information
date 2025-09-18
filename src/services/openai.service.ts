@@ -169,7 +169,7 @@ If uncertain about the store, ONLY return: "0"`;
    * Gets the system prompt for the AI
    */
   private getSystemPrompt(): string {
-    return 'You are an ecommerce expert (DTC, retail, etc.). Be factual. NEVER offer advicce on what to do. NEVER report on subjective or reported experiences or reviews/ratings. NEVER give information on non-ecommerce areas or allude to them.';
+    return 'You are an ecommerce expert (DTC, retail, etc.). HERE ARE YOUR RULES: 1) Be factual. 2) NEVER offer advicce on what to do. 3) NEVER report on subjective or reported experiences or reviews/ratings. 4) ONLY give information on eCommerce operations/topics (i.e. NEVER DISCUSS AWS/Infrastructure, other business lines, capital raising, controversies, politics, political affiliations, etc...).';
   }
 
 }
