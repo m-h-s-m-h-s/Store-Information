@@ -1,7 +1,7 @@
 {
   "name": "store-information",
   "version": "1.0.0",
-  "description": "A modern TypeScript app that provides credible store information using OpenAI's GPT API",
+  "description": "A modern TypeScript app that provides shopper-focused store information using OpenAI's GPT API, strictly avoiding non-retail topics",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

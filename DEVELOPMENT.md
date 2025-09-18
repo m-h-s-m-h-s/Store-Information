@@ -117,6 +117,15 @@ npm run format      # Auto-format code
    - Ensure all checks pass
    - Request review
 
+## Important Guidelines
+
+### Audience Focus
+The application is designed specifically for **shoppers**. All content should:
+- Focus on e-commerce operations only
+- Avoid non-retail topics (AWS, infrastructure, politics, controversies)
+- Provide factual information relevant to purchase decisions
+- Maintain credibility without subjective reviews or ratings
+
 ## Adding New Features
 
 ### 1. Add New Store Information Type

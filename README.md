@@ -1,13 +1,14 @@
 # Store Information Finder 🏪
 
-A modern TypeScript application that provides credible store information using OpenAI's GPT API. The app generates factual, data-driven content to help build credibility with prospective customers.
+A modern TypeScript application that provides credible store information using OpenAI's GPT API. The app generates factual, e-commerce-focused content specifically for shoppers, helping build credibility while avoiding non-retail topics like infrastructure, politics, or business controversies.
 
 ## Features
 
 - 🤖 **AI-Powered**: Uses OpenAI's GPT-5-mini model with automatic web search fallback for real-time information
 - 🌐 **Web Search**: Automatically searches the web when store information isn't available in the model
-- 📊 **Factual Focus**: Provides only verifiable, factual data about stores
-- 🎯 **Credibility Building**: Generates concise paragraphs designed to build customer trust
+- 📊 **Shopper-Focused**: Provides factual data relevant only to shoppers making purchase decisions
+- 🎯 **Credibility Building**: Generates concise history and scale information to build trust
+- 🚫 **E-commerce Only**: Strictly avoids non-retail topics (cloud services, infrastructure, politics, etc.)
 - ⚡ **Modern Stack**: Built with TypeScript, ES modules, and modern tooling
 - 🛡️ **Error Handling**: Comprehensive error handling with clear user feedback
 - 🎨 **Beautiful CLI**: Interactive command-line interface with colored output and status updates
@@ -139,7 +140,7 @@ The application can be configured using environment variables:
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `OPENAI_API_KEY` | Your OpenAI API key (required) | - |
-| `OPENAI_MODEL` | The GPT model to use | `gpt-5-mini` |
+| `OPENAI_MODEL` | The GPT model to use | `gpt-5-mini` (primary), `gpt-5-mini` (web search) |
 | `API_TIMEOUT` | API request timeout in milliseconds | `30000` |
 
 ## Error Handling

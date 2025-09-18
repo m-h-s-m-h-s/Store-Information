@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Store Information Finder application provides a programmatic interface for retrieving credible store information using OpenAI's GPT API with automatic web search fallback. This document covers the core APIs and services available for developers.
+The Store Information Finder application provides a programmatic interface for retrieving credible store information using OpenAI's GPT API with automatic web search fallback. The application is designed specifically for shoppers, providing only e-commerce relevant information while excluding non-retail business divisions, infrastructure details, or political content. This document covers the core APIs and services available for developers.
 
 ## Core Services
 
@@ -49,6 +49,11 @@ Formats the store information response for display.
 ### OpenAIService
 
 Low-level service for direct OpenAI API interaction.
+
+**Models Used:**
+- Primary: `gpt-5-mini` for initial chat completions
+- Fallback: `gpt-5-mini` with web search via responses API
+- Both models are hardcoded to ensure consistency
 
 ```typescript
 import { OpenAIService } from './services/openai.service';
