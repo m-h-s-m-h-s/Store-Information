@@ -158,7 +158,7 @@ export class OpenAIService {
    * Builds the prompt for the OpenAI API
    */
   private buildPrompt(storeName: string): string {
-    return `Provide ONLY 3-4 SENTENCES of general history about the store at URL: "${storeName}". Focus on factors that will help shoppers understand the context of the store. Do you know anything about their scale or achievements?
+    return `Provide ONLY 1 PARAGRAPH OF 3-4 SENTENCES of general history about the store at URL: "${storeName}". Focus on factors that will help shoppers understand the context of the store. Do you know anything about their scale or achievements?
 
 IMPORTANT: Keep each sentence SHORT and CONCISE. Aim for 15-20 words per sentence maximum. Never use "I" in responses. 
 
